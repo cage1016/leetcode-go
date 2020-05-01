@@ -47,11 +47,52 @@
 func maxDepth(root *TreeNode) int {
 	if root == nil {
 		return 0
-	} else {
-		left := maxDepth(root.Left)
-		right := maxDepth(root.Right)
-		return int(math.Max(float64(left), float64(right))) + 1
 	}
+	// max := math.MinInt64
+	// dfs(root, 1, &max)
+	// return max
+	return bfs(root)
+}
+
+func dfs(node *TreeNode, level int, max *int) {
+	if node.Left == nil && node.Right == nil {
+		if level > *max {
+			*max = level
+		}
+	}
+	
+	if node.Left != nil {
+		dfs(node.Left, level + 1, max)
+	}
+	if node.Right != nil {
+		dfs(node.Right, level + 1, max)
+	}
+}
+
+func bfs(node *TreeNode) int {
+	var queue = []*TreeNode{}
+	queue = append(queue, node, nil)
+	depth := 0
+
+	for len(queue) > 0 {
+		p := queue[0]
+		if p == nil {
+			depth ++
+			queue = append(queue, nil)
+			if queue[0] == nil && queue[1] == nil {
+				break
+			}
+		}else{
+			if p.Left != nil {
+				queue = append(queue, p.Left)
+			}
+			if p.Right != nil {
+				queue = append(queue, p.Right)
+			}
+		}
+		queue = queue[1:]
+	}
+	return depth
 }
 // @lc code=end
 
