@@ -106,7 +106,7 @@ func (this *Codec) deserialize(data string) *TreeNode {
 	queue = append(queue, root)
 
 	values = values[1:]
-	for len(queue) > 0 && len(values) > 0{
+	for len(queue) > 0{
 		if values[0] != "null" {
 			queue[0].Left = &TreeNode{Val:c(values[0])}
 			queue = append(queue, queue[0].Left)
